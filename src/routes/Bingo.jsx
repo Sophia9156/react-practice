@@ -25,8 +25,8 @@ export default function Bingo() {
   }
 
   return (
-    <div>
-      <ul className='bingo'>
+    <div className='bingo'>
+      <ul>
         {
           bingoEl.map((li, key) => (
             <li key={key}>{li}</li>
