@@ -7,6 +7,7 @@ export default function Header() {
       <nav>
         <Link to="/bingo">랜덤 빙고</Link>
         <Link to="/accordion">아코디언</Link>
+        <Link to="/accordion2">아코디언2</Link>
       </nav>
     </header>
   )
