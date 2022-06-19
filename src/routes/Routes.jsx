@@ -4,6 +4,7 @@ import AccordionPractice2 from 'pages/AccordionPractice2';
 import Bingo from 'pages/Bingo';
 import Home from 'pages/Home';
 import Sample from 'pages/Sample';
+import Redux from 'pages/Redux';
 
 export default function CreateRoutes() {
   return (
@@ -13,6 +14,7 @@ export default function CreateRoutes() {
       <Route path="/accordion" element={<AccordionPractice />} />
       <Route path="/accordion2" element={<AccordionPractice2 />} />
       <Route path="/sample" element={<Sample />} />
+      <Route path="/redux" element={<Redux />} />
     </Routes>
   )
 }
