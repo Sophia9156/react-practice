@@ -1,5 +1,9 @@
-.sample{
+.box{
   width: 100px;
   height: 100px;
-  background-color: green;
+  margin-bottom: 700px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: yellow;
 }
