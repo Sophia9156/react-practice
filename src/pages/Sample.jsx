@@ -1,48 +1,55 @@
-import { useState, useEffect, useCallback } from "react";
-import { useInView } from "react-intersection-observer";
-import styles from './sample.module.scss';
+import { useState } from 'react';
 
-export default function Sample() {
-  const [items, setItems] = useState([])
-  const [page, setPage] = useState(1)
-  const [loading, setLoading] = useState(false)
+export default function Sample({loading, data}) {
+  const [checkItems, setCheckItems] = useState([]);
 
-  const [ref, inView] = useInView({threshold: 0.7})
-
-  // 서버에서 아이템을 가지고 오는 함수
-  const getItems = useCallback(async () => {
-    setLoading(true)
-    await setTimeout(() => {
-      setItems(prev => [...prev, page])
-    }, 1000);
-    setLoading(false)
-  }, [page])
-
-  // `getItems` 가 바뀔 때 마다 함수 실행
-  useEffect(() => {
-    getItems()
-  }, [getItems])
-
-  useEffect(() => {
-    // 사용자가 마지막 요소를 보고 있고, 로딩 중이 아니라면
-    if (inView && !loading) {
-      setPage(prevState => prevState + 1)
+  // 체크박스 단일 선택 & 전체 선택
+  const handleSingleCheck = (checked, id) => {
+    if (checked) {
+      setCheckItems(prev => [...prev, id]);
+    } else {
+      setCheckItems(checkItems.filter((el) => el !== id));
     }
-  }, [inView, loading])
+  };
+  const handleAllCheck = (checked) => {
+    if(checked) {
+      const idArray = [];
+      data.forEach((el) => idArray.push(el.id));
+      setCheckItems(idArray);
+    }
+    else {
+      setCheckItems([]);
+    }
+  }
 
   return (
-    <>
-      <div className="list" ref={ref}>
-        {items.map((item, idx) => (
-          <div key={idx} className={styles.box}>{item}</div>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            <input type='checkbox' name='select-all'
+              onChange={(e) => handleAllCheck(e.target.checked)}
+              checked={
+                checkItems.length === data.length
+                  ? true
+                : false
+              } />
+          </th>
+          <th>Title</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data?.map((data, key) => (
+          <tr key={key}>
+            <td>
+              <input type='checkbox' name={`select-${data.id}`}
+                onChange={(e) => handleSingleCheck(e.target.checked, data.id)}
+                checked={checkItems.includes(data.id) ? true : false} />
+            </td>
+            <td>{data.title}</td>
+          </tr>
         ))}
-      </div>
-      <div 
-        className="loading"
-        style={loading ? {display: 'block'} : {display: 'none'}}>
-        <p>Loading...</p>
-      </div>
-      <div className="footer">Footer</div>
-    </>
+      </tbody>
+    </table>
   )
 }
