@@ -1,5 +1,5 @@
 import Counter from "components/Counter";
-import { decreaseAsync, increaseAsync } from "modules/counter";
+import { decreaseAsync, increaseAsync } from "modules/counter2";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Redux() {
